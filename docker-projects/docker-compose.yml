@@ -1,0 +1,21 @@
+version: '3'
+services:
+  apache2:
+    image: dpereyra/demo_api:apache2-php-dev
+    container_name: release-api-demo-apache-php-dev-container
+    restart: always
+    ports:
+      - "80:80"
+  mysql:
+    image: dpereyra/demo_api:mysql
+    container_name: release-api-demo-mysql-container
+    ports:
+      - 3306:3306
+    volumes:
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - db_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - TZ=America/Buenos_Aires
+volumes:
+  db_data:
